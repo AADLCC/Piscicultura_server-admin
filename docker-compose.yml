@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api-admin:
+    build: .
+    container_name: expokinal_server_admin
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/estanques_admin
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: expokinal_mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
